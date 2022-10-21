@@ -56,7 +56,8 @@ def add_args(parser):
                         help="The maximum total target sequence length after tokenization. Sequences longer "
                              "than this will be truncated, sequences shorter will be padded.")
 
-    parser.add_argument("--do_train", default=True,
+    # for training or fine-tuning the parameter value should be "store_true"
+    parser.add_argument("--do_train", action="store_false",
                         help="Whether to run eval on the train set.")
     parser.add_argument("--do_eval", action='store_true',
                         help="Whether to run eval on the dev set.")
@@ -100,6 +101,8 @@ def add_args(parser):
                         help="random seed for initialization")
     parser.add_argument('--nbest', type=int, default=1,
                         help="to generate n predictions")
+    parser.add_argument("--test_model_path", default=None, type=str,
+                        help="Path to model when do inference: Should contain the .bin files")
     args = parser.parse_args()
 
     if args.task in ['summarize']:

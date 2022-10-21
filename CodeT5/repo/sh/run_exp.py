@@ -4,15 +4,15 @@ import argparse
 
 
 def get_cmd(task, sub_task, model_tag, gpu, data_num, bs, lr, source_length, target_length, patience, epoch, warmup,
-            model_dir, summary_dir, res_fn, max_steps=None, save_steps=None, log_steps=None, nbest=1, load_model_path=None, do_train="store_true"):
+            model_dir, summary_dir, res_fn, max_steps=None, save_steps=None, log_steps=None, nbest=1, test_model_path=None):
     if max_steps is None:
-        cmd_str = 'bash exp_with_args.sh %s %s %s %d %d %d %d %d %d %d %d %d %s %s %s %d %s %s' % \
+        cmd_str = 'bash exp_with_args.sh %s %s %s %d %d %d %d %d %d %d %d %d %s %s %s %d %s' % \
                   (task, sub_task, model_tag, gpu, data_num, bs, lr, source_length, target_length, patience, epoch,
-                   warmup, model_dir, summary_dir, res_fn, nbest, load_model_path, do_train)
+                   warmup, model_dir, summary_dir, res_fn, nbest, test_model_path)
     else:
-        cmd_str = 'bash exp_with_args.sh %s %s %s %d %d %d %d %d %d %d %d %d %s %s %s %d %d %d %d %s %s' % \
+        cmd_str = 'bash exp_with_args.sh %s %s %s %d %d %d %d %d %d %d %d %d %s %s %s %d %d %d %d %s' % \
                   (task, sub_task, model_tag, gpu, data_num, bs, lr, source_length, target_length, patience, epoch,
-                   warmup, model_dir, summary_dir, res_fn, max_steps, save_steps, log_steps, nbest, load_model_path, do_train)
+                   warmup, model_dir, summary_dir, res_fn, max_steps, save_steps, log_steps, nbest, test_model_path)
     return cmd_str
 
 
@@ -127,7 +127,7 @@ def run_one_exp(args):
                       patience=patience, epoch=epoch, warmup=1000,
                       model_dir=args.model_dir, summary_dir=args.summary_dir,
                       res_fn='{}/{}_{}.txt'.format(args.res_dir, args.task, args.model_tag),
-                      nbest=args.nbest, load_model_path=args.load_model_path, do_train=args.do_train)
+                      nbest=args.nbest, load_model_path=args.test_model_path)
     print('%s\n' % cmd_str)
     os.system(cmd_str)
 
@@ -179,8 +179,7 @@ if __name__ == '__main__':
     parser.add_argument("--data_num", type=int, default=-1, help='number of data instances to use, -1 for full data')
     parser.add_argument("--gpu", type=int, default=0, help='index of the gpu to use in a cluster')
     parser.add_argument("--nbest", type=int, default=1, help='to generate n predictions')
-    parser.add_argument("--load_model_path", type=str, default=None, help='give model path here')
-    parser.add_argument("--do_train", type=str, default="store_true", help='determines to train or not. For direct testing it should be store_false.')
+    parser.add_argument("--test_model_path", type=str, default=None, help='give test model path here when inferencing')
     
     args = parser.parse_args()
 
