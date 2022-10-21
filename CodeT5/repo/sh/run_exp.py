@@ -127,7 +127,7 @@ def run_one_exp(args):
                       patience=patience, epoch=epoch, warmup=1000,
                       model_dir=args.model_dir, summary_dir=args.summary_dir,
                       res_fn='{}/{}_{}.txt'.format(args.res_dir, args.task, args.model_tag),
-                      nbest=args.nbest, load_model_path=args.test_model_path)
+                      nbest=args.nbest, test_model_path=args.test_model_path)
     print('%s\n' % cmd_str)
     os.system(cmd_str)
 
