@@ -1,0 +1,6 @@
+numpy
+tqdm
+torch==1.7.1
+tensorboard==2.4.1
+transformers==4.6.1
+tree-sitter==0.2.2
