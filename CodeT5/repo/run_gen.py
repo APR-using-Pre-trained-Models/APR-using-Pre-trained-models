@@ -381,10 +381,9 @@ def main():
         logger.info("  Batch size = %d", args.eval_batch_size)
 
         for criteria in ['best-bleu']:
-            if args.load_model_path is None:
-                file = os.path.join(args.output_dir, 'checkpoint-{}/pytorch_model.bin'.format(criteria))
-            else:
-                file = args.load_model_path
+            file = os.path.join(args.output_dir, 'checkpoint-{}/pytorch_model.bin'.format(criteria))
+            if args.test_model_path:
+                file = args.test_model_path
             logger.info("Reload model from {}".format(file))
             print("Reload model from {}".format(file))
             model.load_state_dict(torch.load(file))
