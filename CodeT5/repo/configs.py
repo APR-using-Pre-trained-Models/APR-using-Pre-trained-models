@@ -35,7 +35,7 @@ def add_args(parser):
     parser.add_argument("--output_dir", default=None, type=str, required=True,
                         help="The output directory where the model predictions and checkpoints will be written.")
     # for resume finetuning, load the previous checkpoint 
-    parser.add_argument("--load_model_path", default="/content/drive/MyDrive/CodeT5/repo/sh/saved_models/refine_tufano/c/codet5_base_all_lr5_bs4_src200_trg200_pat5_e10/checkpoint-last/pytorch_model.bin", type=str,
+    parser.add_argument("--load_model_path", default=None, type=str,
                         help="Path to trained model: Should contain the .bin files")
     ## Other parameters
     parser.add_argument("--train_filename", default=None, type=str,
@@ -56,7 +56,7 @@ def add_args(parser):
                         help="The maximum total target sequence length after tokenization. Sequences longer "
                              "than this will be truncated, sequences shorter will be padded.")
 
-    parser.add_argument("--do_train", action='store_false',
+    parser.add_argument("--do_train", default=True,
                         help="Whether to run eval on the train set.")
     parser.add_argument("--do_eval", action='store_true',
                         help="Whether to run eval on the dev set.")
