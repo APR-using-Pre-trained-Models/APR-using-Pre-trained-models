@@ -5,7 +5,7 @@ SUB_TASK=$2         # cc or c
 
 
 CURRENT_DIR=$(pwd)
-HOME_DIR=$(realpath ../../..)
+HOME_DIR=$(realpath ../..)
 DATA_DIR=${HOME_DIR}/data/${TASK}/${SUB_TASK}
 SPM_DIR=${HOME_DIR}/sentencepiece
 

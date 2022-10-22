@@ -2,7 +2,7 @@
 
 export PYTHONIOENCODING=utf-8
 CURRENT_DIR=$(pwd)
-HOME_DIR=$(realpath ../../..)
+HOME_DIR=$(realpath ../..)
 
 while getopts ":h" option; do
     case $option in
@@ -22,7 +22,7 @@ DATA_SIZE=$2        # small or medium
 TASK=$3             # refine_R4R or refine_tufano
 SUB_TASK=$4         # cc or c
 NBEST=$5            # number of predictions 1 or 5 or 10
-#TEST_MODEL_PATH=$6  # model path for testing
+TEST_MODEL_PATH=$6  # model path for testing
 MODEL_SIZE=${7:-base}
 
 SOURCE=source
@@ -123,9 +123,10 @@ function fine_tune() {
 function generate() {
 
     #########################CHANGES############################
-    # model=${SAVE_DIR}/checkpoint_best.pt
-    TEST_MODEL_PATH=${6:-${SAVE_DIR}/checkpoint_best.pt}
-    model=${TEST_MODEL_PATH}
+    model=${SAVE_DIR}/checkpoint_best.pt
+    if [ ! -z "${TEST_MODEL_PATH}" ]; then
+      model=${TEST_MODEL_PATH}
+    fi
 
     FILE_PREF=${SAVE_DIR}/output
     RESULT_FILE=${SAVE_DIR}/result.txt
