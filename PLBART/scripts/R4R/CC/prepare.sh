@@ -2,7 +2,7 @@
 
 CURRENT_DIR=$(pwd)
 HOME_DIR=$(realpath ../../..)
-DATA_DIR=${HOME_DIR}/data/R4R
+DATA_DIR=${HOME_DIR}/data/refine_R4R/cc
 SPM_DIR=${HOME_DIR}/sentencepiece
 
 function spm_preprocess() {

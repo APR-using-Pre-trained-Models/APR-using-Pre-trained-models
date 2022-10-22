@@ -25,28 +25,28 @@ SOURCE=source
 TARGET=target
 
 #########################CHANGES############################
-PATH_2_DATA=${HOME_DIR}/data/R4R
+PATH_2_DATA=${HOME_DIR}/data/refine_R4R/cc
 CB_EVAL_SCRIPT=${HOME_DIR}/evaluation/CodeBLEU/calc_code_bleu.py
 
 ARCH=mbart_${MODEL_SIZE}
 
 #########################CHANGES############################
-#PRETRAINED_MODEL_NAME=plbart_${MODEL_SIZE}.pt
-#PRETRAIN=${HOME_DIR}/pretrain/${PRETRAINED_MODEL_NAME}
-PRETRAINED_MODEL_NAME=checkpoint_best.pt
-PRETRAIN=${HOME_DIR}/pretrain/new_model/${PRETRAINED_MODEL_NAME}
+PRETRAINED_MODEL_NAME=plbart_${MODEL_SIZE}.pt
+PRETRAIN=${HOME_DIR}/pretrain/${PRETRAINED_MODEL_NAME}
+#PRETRAINED_MODEL_NAME=checkpoint_best.pt
+#PRETRAIN=${HOME_DIR}/pretrain/new_model/${PRETRAINED_MODEL_NAME}
 
 SPM_MODEL=${HOME_DIR}/sentencepiece/sentencepiece.bpe.model
 
 #########################CHANGES############################
-#langs=java,python,en_XX
-langs=java
+langs=java,python,en_XX
+#langs=java
 
 #########################CHANGES############################
-#SAVE_DIR=${CURRENT_DIR}/${DATA_SIZE}
-#mkdir -p ${SAVE_DIR}
+SAVE_DIR=${CURRENT_DIR}/${DATA_SIZE}
+mkdir -p ${SAVE_DIR}
 #only use this for saving in drive from colab
-SAVE_DIR=/content/drive/MyDrive/PLBART/results/R4R
+#SAVE_DIR=/content/drive/MyDrive/PLBART/results/R4R
 
 USER_DIR=${HOME_DIR}/source
 
