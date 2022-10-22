@@ -24,6 +24,7 @@ This repository contains the datasets and source codes on which we experimented 
 
 Steps:
 
+- First go to the CodeT5 folder
 - Install the requiremnts using the following command:
 
   ```
@@ -73,6 +74,51 @@ Steps:
                       --sub_task cc \
                       --nbest 10 \
                       --test_model_path /content/pytorch_model.bin
+  ```
+
+## For PLBART model:
+
+Steps:
+
+- Pre-requisite install conda from [here](https://conda.io/projects/conda/en/latest/user-guide/install/index.html):
+
+- Download your desired models from the [download link](#fine-tuned-models-download-link) provided above and save it in a directory.
+
+- Go to the PLBART folder
+
+- Setup the environment using the following command
+  ```
+  bash install_env.sh
+  ```
+- Go to the code refinement folder
+- binarize the data using the following command
+  ```
+  bash prepare.sh <task> <sub_task>
+  ```
+- Run the inference using the following command:
+  ```
+  bash run.sh <gpu_num> <dataset_size> <task> <sub_task> <nbest> <test_model_path>
+  ```
+
+  **Parameters description:**
+
+  - **gpu_num:** It represents gpu number, usually `0` for single gpu.
+
+  - **dataset_size:** It represents dataset size for the setting of batch size, it can be `small` or `medium`.
+
+  - **task:** It represents on which datatset we want to do inference. For the Review4Repair dataset, `task` should be `refine_R4R` and for the dataset by Tufano et al., `task` should be `refine_tufano`.
+
+  - **sub_task:** It represents the type of the dataset i.e. with or without code review. If the dataset doesn't contain code review, then `sub_task` should be `c`. On the other hand, if the dataset contains code review, then `sub_task` should be `cc`.
+
+  - **nbest:** It represents which accuracy we want to calculate i.e. Top-1, Top-5 or Top-10 accuracy.
+    So `nbest` value should be `1`, `5` or `10`.
+
+  - **test_model_path:** It represents the path to the fine-tuned model we want to do inference.
+
+  _For example, to run inference on the Review4Repair dataset with code review and to see the Top-10 accuracy the command can be like this:_
+
+  ```
+  !bash run.sh 0 medium refine_R4R cc 10 /content/checkpoint_best.pt
   ```
 
 # Pre-processed Datasets
