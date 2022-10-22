@@ -158,7 +158,7 @@ def eval_bleu_epoch(args, eval_data, eval_examples, model, tokenizer, split_tag,
 
         result = {'em': np.mean(dev_accs) * 100, 'bleu': bleu}
         if args.task in ['refine', 'refine_R4R', 'refine_tufano']:
-            result['codebleu'] = codebleu
+            result['codebleu'] = codebleu * 100
         if args.task == 'concode':
             result['codebleu'] = codebleu * 100
 

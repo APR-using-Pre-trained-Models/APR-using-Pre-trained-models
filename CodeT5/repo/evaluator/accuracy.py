@@ -48,10 +48,13 @@ def evaluate_accuracy_in_classes(refs, pres, nbest, dataset):
 
     print("nbest:", nbest)
     print("total instances:", length)
-    print("exact match(j<=0):", correct_1, "acc:", acc_1)
-    print("exact match(j<=4):", correct_5, "acc:", acc_5)
-    print("exact match(j<=9):", correct_10, "acc:", acc_10)
-    print("matched_indices: ", matched_indices)
+    if nbest == 1:
+        print("exact match(nbest=1) count:", correct_1, "accuracy:", acc_1)
+    elif nbest == 5:
+        print("exact match(nbest=5) count:", correct_5, "accuracy:", acc_5)
+    elif nbest == 10:
+        print("exact match(nbest=10) count:", correct_10, "accuracy:", acc_10)
+    #print("matched_indices: ", matched_indices)
 
     # matched_indices_filename = "/home/amllab-2070/Desktop/Thesis78-84/PLBART/scripts/code_to_code/CC_review_for_repair/files/PLBART_matched_indices.txt"
     # with open(matched_indices_filename, "w") as f:
