@@ -12,6 +12,16 @@ tufano_test_data_stat = {
 }
 
 def evaluate_accuracy_in_classes(refs, pres, nbest, dataset):
+    try:
+        with open(refs, 'r') as ref_file, open(pres, 'r') as pres_file:
+            refs = ref_file.readlines()
+            pres = pres_file.readlines()
+    except Exception as e:
+        print('Could not open file')
+        print(e)
+
+        exit()
+    
     refs = [x.strip() for x in refs]
     pres = [x.strip() for x in pres]
 
