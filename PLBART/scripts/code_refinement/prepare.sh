@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+TASK=$1             # refine_R4R or refine_tufano
+SUB_TASK=$2         # cc or c
+
+
 CURRENT_DIR=$(pwd)
 HOME_DIR=$(realpath ../../..)
 DATA_DIR=${HOME_DIR}/data/${TASK}/${SUB_TASK}
