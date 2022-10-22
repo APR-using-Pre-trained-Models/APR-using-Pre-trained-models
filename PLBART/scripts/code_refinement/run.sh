@@ -17,15 +17,19 @@ while getopts ":h" option; do
     esac
 done
 
-GPU=$1
-DATA_SIZE=$2
-MODEL_SIZE=${3:-base}
+GPU=$1              # 0 -- single gpu
+DATA_SIZE=$2        # small or medium
+TASK=$3             # refine_R4R or refine_tufano
+SUB_TASK=$4         # cc or c
+NBEST=$5            # number of predictions 1 or 5 or 10
+#TEST_MODEL_PATH=$6  # model path for testing
+MODEL_SIZE=${7:-base}
 
 SOURCE=source
 TARGET=target
 
 #########################CHANGES############################
-PATH_2_DATA=${HOME_DIR}/data/refine_R4R/cc
+PATH_2_DATA=${HOME_DIR}/data/${TASK}/${SUB_TASK}
 CB_EVAL_SCRIPT=${HOME_DIR}/evaluation/CodeBLEU/calc_code_bleu.py
 
 ARCH=mbart_${MODEL_SIZE}
@@ -120,7 +124,8 @@ function generate() {
 
     #########################CHANGES############################
     # model=${SAVE_DIR}/checkpoint_best.pt
-    model=${HOME_DIR}/pretrain/new_model/checkpoint_best.pt
+    TEST_MODEL_PATH=${6:-${SAVE_DIR}/checkpoint_best.pt}
+    model=${TEST_MODEL_PATH}
 
     FILE_PREF=${SAVE_DIR}/output
     RESULT_FILE=${SAVE_DIR}/result.txt
@@ -136,25 +141,37 @@ function generate() {
         --sacrebleu \
         --remove-bpe 'sentencepiece' \
         --max-len-b 200 \
-        --beam 5 \
+        --beam 10 \
+        --nbest $NBEST \
         --batch-size 4 \
         --langs $langs >$FILE_PREF
 
     cat $FILE_PREF | grep -P "^H" | sort -V | cut -f 3- | sed 's/\[${TARGET}\]//g' >$FILE_PREF.hyp
 
-    echo "CodeXGlue Evaluation" >${RESULT_FILE}
-    python ${HOME_DIR}/evaluation/bleu.py \
+    if [[ $NBEST == 1 ]]; then
+        echo "BLEU Evaluation" >${RESULT_FILE}
+        python ${HOME_DIR}/evaluation/bleu.py \
+            --ref $GOUND_TRUTH_PATH \
+            --pre $FILE_PREF.hyp \
+            2>&1 | tee -a ${RESULT_FILE}
+
+        echo "CodeBLEU Evaluation" >>${RESULT_FILE}
+        export PYTHONPATH=${HOME_DIR}
+        python $CB_EVAL_SCRIPT \
+            --refs $GOUND_TRUTH_PATH \
+            --hyp $FILE_PREF.hyp \
+            --lang java \
+            2>&1 | tee -a ${RESULT_FILE}
+    fi
+
+    echo "Accuracy Evaluation" >${RESULT_FILE}
+    python ${HOME_DIR}/evaluation/accuracy.py \
         --ref $GOUND_TRUTH_PATH \
         --pre $FILE_PREF.hyp \
+        --nbest $NBEST \
+        --dataset $TASK \
         2>&1 | tee -a ${RESULT_FILE}
-
-    echo "CodeBLEU Evaluation" >>${RESULT_FILE}
-    export PYTHONPATH=${HOME_DIR}
-    python $CB_EVAL_SCRIPT \
-        --refs $GOUND_TRUTH_PATH \
-        --hyp $FILE_PREF.hyp \
-        --lang java \
-        2>&1 | tee -a ${RESULT_FILE}
+    
 
 }
 
