@@ -86,26 +86,26 @@ Steps:
 
 - Go to the [`APR-using-Pre-trained-models/PLBART`](https://github.com/APR-using-Pre-trained-Models/APR-using-Pre-trained-models/tree/main/PLBART) directory
 
-- Setup the environment using the following command
+- Setup the environment using the following command:
   ```
   bash install_env.sh
   ```
-- Go to the code refinement folder
-- binarize the data using the following command
+- Go to the [scripts/code_refinement](https://github.com/APR-using-Pre-trained-Models/APR-using-Pre-trained-models/tree/main/PLBART/scripts/code_refinement) folder
+- Then tokenize the data using the following command:
   ```
   bash prepare.sh <task> <sub_task>
   ```
 - Run the inference using the following command:
 
   ```
-  bash run.sh <gpu_num> <dataset_size> <task> <sub_task> <nbest> <test_model_path>
+  bash run.sh <gpu_id> <dataset_size> <task> <sub_task> <nbest> <test_model_path>
   ```
 
   **Parameters description:**
 
-  - **`gpu_num:`** It represents gpu number, usually `0` for single gpu.
+  - **`gpu_id:`** It represents gpu id, usually `0` for single gpu.
 
-  - **`dataset_size:`** It represents dataset size for the setting of batch size, it can be `small` or `medium`.
+  - **`dataset_size:`** It represents the dataset size for the setting of `batch size`. It can be `small` or `medium`.
 
   - **`task:`** It represents on which datatset we want to do inference. For the Review4Repair dataset, `task` should be `refine_R4R` and for the dataset by Tufano et al., `task` should be `refine_tufano`.
 
